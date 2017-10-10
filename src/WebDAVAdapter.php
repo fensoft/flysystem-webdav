@@ -381,4 +381,10 @@ class WebDAVAdapter extends AbstractAdapter
 
         return $result;
     }
+
+    protected function stream($path, $resource, Config $config, $fallback){
+        Util::rewindStream($resource);
+        $fallbackCall = [$this, $fallback];
+        return call_user_func($fallbackCall, $path, $resource, $config);
+    }
 }
